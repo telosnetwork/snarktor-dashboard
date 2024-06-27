@@ -1,0 +1,54 @@
+// this file contains one-time global imports
+@import './global/global-index';
+@import './utilities';
+@import './components/json-viewer';
+@import './components/notification';
+@import './components/q-layout';
+
+
+body {
+    --top-bar-height: 48px;
+    --bottom-bar-height: 52px;
+
+    font-family: "silkaregular", sans-serif;
+}
+
+body.body--light {
+    --border-color: #{$grey-5};
+    --text-color: #{$dark};
+    --invert-text-color: white;
+    --grey-text-color: #{$grey-7};
+    --tab-bg-color: #{$grey-3};
+    --active-tab-bg-color: #{$tab-active-light};
+    --active-tab-text-color: white;
+
+    --q-primary: #2a8de3 !important;
+    --q-secondary: #8B3F98 !important;
+
+    a:hover {
+        color: $a-hover-light;
+    }
+}
+
+body.body--dark {
+    --border-color: #{$grey-7};
+    --text-color: white;
+    --invert-text-color: #{$dark};
+    --grey-text-color: #{$grey-5};
+    --tab-bg-color: #{$grey-10};
+    --active-tab-bg-color: #{#{$tab-active-dark}};
+    --active-tab-text-color: white;
+
+    --q-primary: #2a8de3 !important;
+    --q-secondary: #8B3F98 !important;
+
+    a:hover {
+        color: $a-hover-dark;
+    }
+}
+
+a {
+    color: var(--q-primary);
+    text-decoration: none;
+    cursor: pointer;
+}

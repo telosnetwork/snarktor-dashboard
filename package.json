@@ -1,0 +1,56 @@
+{
+  "name": "snarktor-dashboard",
+  "version": "1.0.0",
+  "description": "Snarktor Internal Data Visualizer",
+  "productName": "Snarktor Dashboard",
+  "private": true,
+  "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "axios": "^1.6.0",
+    "axios-time": "^1.0.0",
+    "babel-loader": "^8.1.0",
+    "big.js": "^6.2.1",
+    "bn.js": "^5.2.0",
+    "core-js": "^3.6.5",
+    "d3": "^7.9.0",
+    "date-fns": "^2.29.3",
+    "dotenv": "^8.2.0",
+    "fs": "^0.0.1-security",
+    "quasar": "^2.16.4",
+    "vue": "3",
+    "vue-i18n": "^9.9.0",
+    "vue-inline-svg": "^3.1.2",
+    "vue-json-pretty": "^2.2.4",
+    "vue-json-viewer": "3",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@babel/core": "7.19.3",
+    "@babel/preset-env": "7.19.3",
+    "@babel/preset-typescript": "^7.23.0",
+    "@quasar/app-webpack": "3.13.2",
+    "@types/lodash": "^4.14.182",
+    "node-polyfill-webpack-plugin": "^2.0.1"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
