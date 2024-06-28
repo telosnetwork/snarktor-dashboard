@@ -14,7 +14,7 @@ const toggleDrawer = () => {
         <q-toolbar>
             <!-- navbar title -->
             <q-toolbar-title>
-                D3 Test
+                Snarktor Dashboard
             </q-toolbar-title>
 
             <!-- This is the top right burger icon to open/close side menu -->
