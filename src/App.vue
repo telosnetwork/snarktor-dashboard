@@ -12,22 +12,20 @@ const toggleDrawer = () => {
 <q-layout>
     <q-header elevated>
         <q-toolbar>
-            <!-- navbar title -->
-            <q-toolbar-title>
-                Snarktor Dashboard
-            </q-toolbar-title>
-
-            <!-- This is the top right burger icon to open/close side menu -->
             <q-btn
                 flat
                 round
                 icon="menu"
                 @click="toggleDrawer"
             />
+            
+            <q-toolbar-title>
+                Snarktor Dashboard
+            </q-toolbar-title>
         </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="drawer" side="right" bordered>
+    <q-drawer v-model="drawer" side="left" bordered>
         <q-list>
             <q-item to="/dashboard" active-class="q-item--active">
                 <q-item-section>Dashboard</q-item-section>
