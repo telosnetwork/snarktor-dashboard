@@ -11,6 +11,7 @@ export interface RawProof {
     stage: Stage;
     input_time: number;
     aggregated: [string, string] | null;
+    parent: string | null;
     height: number;
 }
 
@@ -26,6 +27,7 @@ export interface Proof {
     tree: [Proof, Proof] | null;
     leafs: number;
     height: number;
+    parent: Proof | null;
 }
 
 // ---------------------------------------------------------

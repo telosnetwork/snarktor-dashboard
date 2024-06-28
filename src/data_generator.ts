@@ -53,17 +53,18 @@ export class DataGenerator {
         const numberOfProofs = Math.floor(Math.random() * 5 * controlFactor) + 1;
         const proofs: RawProof[] = [];
         for (let i = 0; i < numberOfProofs; i++) {
-            const proof: RawProof = {
+            const leaf: RawProof = {
                 id: this.generateUUID(),
                 stage: 'received',
                 height: 1,
                 aggregated: null,
                 payload: this.getSomePayload(),
                 input_time: Date.now(),
+                parent: null,
             };
-            proofs.push(proof);
-            this.leafs.push(proof);
-            this.known[proof.id] = proof;
+            proofs.push(leaf);
+            this.leafs.push(leaf);
+            this.known[leaf.id] = leaf;
         }
 
         // Generamos entre 0 y 2 pruebas que serán padres de quialquier par de nodos que se encuentren en orphans
@@ -83,7 +84,13 @@ export class DataGenerator {
                 aggregated: [leftId, rightId],
                 payload: this.getSomePayload(),
                 input_time: Date.now(),
+                parent: null,
             };
+            // actualizamos el doble enlace entre los nodos y el padre
+            const left = this.known[leftId];
+            const right = this.known[rightId];
+            left.parent = parent.id;
+            right.parent = parent.id;
 
             // retiramos los hijos y el padre de la listas de leafs y roots
             this.leafs = this.leafs.filter((p) => p.id !== leftId && p.id !== rightId && p.id !== parent.id);
@@ -95,11 +102,56 @@ export class DataGenerator {
             proofs.push(parent);
         }
 
+        // recorremos todos las raices y tomamos la primera que supere el umbral de altura config.maxHeight
+        // Luego que tengamos ese nodo, lo recorremos hasta encontrar un sub arbol de altura config.pruneHeight
+        // cortamos el arbol en ese punto returando el nodo del arbol (junto con sus hijos), le cambiamos el estado a submmited
+        // y lo agregamos a la lista de proofs
+        // Finalmente recorremos desde ese punto hacia la raíz original actualizando los heights de los nodos
+
+        const highestRoot = this.roots.find((root) => root.height >= config.maxHeight);
+        if (highestRoot) {
+            console.log('PODA !!!', this.roots.map((r) => r.height));
+            const { subTree, subTreeParent } = this.cutTree(highestRoot, config.pruneHeight);
+            // Podamos el arbol de forma lógica (conservando los enlaces de la estructura)
+            subTree.stage = 'submitted';
+            subTree.height = 1;
+            proofs.push(subTree);
+            this.updateHeights(subTreeParent);
+        }
+
         proofs.forEach((proof) => {
             this.known[proof.id] = proof;
         });
 
         return proofs;
+    }
+
+    private cutTree(root: RawProof, pruneHeight: number): { subTree: RawProof, subTreeParent: RawProof } {
+        // const subTree: RawProof[] = [];
+        let current = root;
+        // buscamos donde cortar el arbol
+        while (current.height > pruneHeight) {
+            const left = this.known[current.aggregated![0]];
+            const right = this.known[current.aggregated![1]];
+            if (left.height > right.height) {
+                current = left;
+            } else {
+                current = right;
+            }
+        }
+        const subTree = current;
+        const subTreeParent = this.known[current.parent!];
+        return { subTree, subTreeParent };
+    }
+
+    private updateHeights(parent: RawProof) {
+        if (!parent) {
+            return;
+        }
+        const left = this.known[parent.aggregated![0]];
+        const right = this.known[parent.aggregated![1]];
+        parent.height = Math.max(left.height, right.height) + 1;
+        this.updateHeights(this.known[parent.parent!]);
     }
 
     private getSomePayload() {

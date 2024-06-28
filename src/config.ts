@@ -1,4 +1,9 @@
 export const config = {
+    // Generación de datos:
+    // altura máxima de un árbol
+    maxHeight: 8,
+    // Altura mínima para la rama que será podada
+    pruneHeight: 4,
     // intervalo de tiempo en milisegundos entre la generación de pruebas
     generationInterval: 1000,
     // plantilla para la generación de ids únicos
