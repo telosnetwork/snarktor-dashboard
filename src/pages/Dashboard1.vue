@@ -64,11 +64,6 @@ const renderTree = (data: Proof, leavesUpwards: boolean) => {
         .attr('class', treeClass)
         .attr('transform', (d: { x: any; y: any; }) => `translate(${d.x},${y(d)})`);
 
-    // Append circles with colors based on circuit_digest
-    // node.append('circle')
-    //     .attr('r', config.circleRadio + 1)
-    //     .attr('fill', (d: {data: Proof}) => turtleColor(d.data.payload.turtle));
-
     // Añadir íconos de Blockies basados en d.data.id
     node.each(function(d: any) {
         const icon = blockies.create({ seed: d.data.id, size: 8, scale: 4 });
@@ -82,13 +77,18 @@ const renderTree = (data: Proof, leavesUpwards: boolean) => {
             .attr('cy', 0);
 
         // Añadir la imagen con el clipPath aplicado
-        d3.select(this).append('image')
+        const image = d3.select(this).append('image')
             .attr('xlink:href', icon.toDataURL())
             .attr('width', 32)
             .attr('height', 32)
             .attr('x', -16)
             .attr('y', -16)
             .attr('clip-path', `url(#clip-${d.data.id})`);
+
+        // Aplicar filtro blanco y negro si d.data.stage es 'submitted'
+        if (d.data.stage === 'submitted') {
+            image.attr('filter', 'url(#grayscale)');
+        }
     });
 
 };
