@@ -1,37 +1,49 @@
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "node_modules/rxjs/dist/types/index";
 
-export type Stage = 'received' | 'aggregated' | 'submitted' ;
 
-// Payload can be anything
-export type Payload = { turtle: string };
+export interface ProofNode {
+    proof_uuid: string;
+    left: ProofNode | null;
+    right: ProofNode | null;
+}
 
-export interface RawProof {
-    id: string;
-    payload: Payload;
-    stage: Stage;
-    input_time: number;
-    aggregated: [string, string] | null;
-    parent: string | null;
-    height: number;
+export interface ProofData {
+    submitted_proofs: ProofNode[];
+    aggregated_proofs: ProofNode[];
+    base_proofs: ProofNode[];
 }
 
 export interface DataSource {
-    incomingData: BehaviorSubject<RawProof[]>;
+    incomingData: BehaviorSubject<ProofData>;
 }
 
-export interface Proof {
-    id: string;
-    payload: Payload;
-    stage: Stage;
-    input_time: number;
-    tree: [Proof, Proof] | null;
-    leafs: number;
+export interface TreeLayout {
+    height: number,
+    width: number,
+    h_offset: number;
+    v_offset: number;
+    nodeRadius: number;
+    leavesUpwards: boolean,
+}
+
+export interface NodeListLayout {
+    h_spacing: number;
+    v_spacing: number;
+    h_offset: number;
+    v_offset: number;
+    nodeRadius: number;
+}
+
+export interface SvgLayout  {
     height: number;
-    parent: Proof | null;
+    width: number;
+    count: number;
+    h_offset: number;
+    v_offset: number;
 }
 
-// ---------------------------------------------------------
-// This data is just for the demo
-export const turtles = ['Donatello', 'Leonardo', 'Michelangelo', 'Raphael'];
-export const turtleColors = ['purple', 'blue', 'orange', 'red'];
-
+export interface Layout {
+    received: SvgLayout;
+    aggregated: SvgLayout;
+    submitted: SvgLayout;
+}

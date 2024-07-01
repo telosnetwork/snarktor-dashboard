@@ -1,3 +1,4 @@
+/*
 import { BehaviorSubject } from "rxjs";
 import { DataSource, Proof, RawProof } from "./types";
 
@@ -179,4 +180,4 @@ export class DataProcessor {
         this.received = this.received.filter((p) => p.id !== leftId && p.id !== rightId);
         this.aggregated = this.aggregated.filter((p) => p.id !== leftId && p.id !== rightId);
     }
-}
+}*/

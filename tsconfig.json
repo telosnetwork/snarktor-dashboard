@@ -1,8 +1,14 @@
 {
   "extends": "@quasar/app-webpack/tsconfig-preset",
   "compilerOptions": {
+    "strict": false,
+    "noImplicitAny": false,
     "baseUrl": ".",
     "target": "es2016",
-    "lib": ["es2016", "dom"]
+    "lib": ["es2016", "dom"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
   }
 }

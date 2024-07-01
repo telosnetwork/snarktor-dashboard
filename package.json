@@ -40,6 +40,9 @@
     "@types/lodash": "^4.14.182",
     "node-polyfill-webpack-plugin": "^2.0.1"
   },
+  "doNotUse": {
+    "@types/d3": "^7.4.3"
+  },
   "browserslist": [
     "last 10 Chrome versions",
     "last 10 Firefox versions",

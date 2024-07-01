@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/*
 import { onMounted } from 'vue';
 import * as d3 from 'd3';
 import blockies from 'blockies-identicon';
@@ -112,7 +113,7 @@ onMounted(() => {
     // source.iterate(10);
 
 });
-
+*/
 </script>
 
 

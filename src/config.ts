@@ -1,18 +1,29 @@
 export const config = {
-    // Generación de datos:
-    // altura máxima de un árbol
-    maxHeight: 8,
-    // Altura mínima para la rama que será podada
-    pruneHeight: 4,
-    // intervalo de tiempo en milisegundos entre la generación de pruebas
-    generationInterval: 1000,
-    // plantilla para la generación de ids únicos
-    uuidTemplate: 'xxxxx', // 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    // ------ Data generator ------
+    // Template for generating unique IDs
+    uuidTemplate: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    // Variable that determines if we should use a random data generator or base it on real data obtained from https://snarktor-dev.telos.net/metrics
+    useGeneratedData: true,
 
-    // Configuración de la visualización
-    circleRadio: 15,
-    arcWidth: 10,
-    width: 960,
-    height: 800,
-    margin: { top: 50, right: 0, bottom: 50, left: 0 },
+    // ------ Data fetcher ------
+    // API URL that provides the data
+    dataUrl: 'https://snarktor-dev.telos.net/metrics',
+
+    // ------ Tree Layout ------
+    treeMargin: { top: 50, right: 0, bottom: 50, left: 0 },
+    // limits for calculating best node radius
+    radiusLimits: { max: 16, min: 4, maxLeafs: 100, minLeafs: 32 },
+    // set leavesUpwards true if you want the leaves to be at the top of the tree
+    leavesUpwards: false,
+    // How many rows per section
+    rows: 1,
+    // Text offsets
+    text_h_offset: 40,
+    text_v_offset: -10,
+
+    // ------ Received Layout ------
+    // received offsets
+    received: { h_offset: 40, v_offset: 45, h_spacing: 40, v_spacing: 0 },
+    // Truncate the proof_uuid to this length
+    truncateId: 5,
 }
