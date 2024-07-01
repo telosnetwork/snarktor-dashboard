@@ -3,7 +3,7 @@ export const config = {
     // Template for generating unique IDs
     uuidTemplate: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
     // Variable that determines if we should use a random data generator or base it on real data obtained from https://snarktor-dev.telos.net/metrics
-    useGeneratedData: true,
+    useGeneratedData: false,
 
     // ------ Data fetcher ------
     // API URL that provides the data
