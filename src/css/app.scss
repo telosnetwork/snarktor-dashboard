@@ -30,6 +30,10 @@ body.body--light {
     }
 }
 
+body.body--light a:hover {
+    color: $a-hover-light;
+}
+
 body.body--dark {
     --border-color: #{$grey-7};
     --text-color: white;
@@ -52,3 +56,4 @@ a {
     text-decoration: none;
     cursor: pointer;
 }
+

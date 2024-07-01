@@ -55,26 +55,32 @@ export const renderTree = (data: ProofNode, evgSelector: string, layout: TreeLay
         console.log('node.each', {d});
         const icon: HTMLCanvasElement = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
 
-        // Create a circular clipPath
-        d3.select(this).append('clipPath')
-            .attr('id', `clip-${d.data.proof_uuid}`)
-            .append('circle')
-            .attr('r', layout.nodeRadius)
-            .attr('cx', 0)
-            .attr('cy', 0);
-
-        // Add the image with the applied clipPath
-        const image = d3.select(this).append('image')
-            .attr('xlink:href', icon.toDataURL())
-            .attr('width', layout.nodeRadius * 2)
-            .attr('height', layout.nodeRadius * 2)
-            .attr('x', -layout.nodeRadius)
-            .attr('y', -layout.nodeRadius)
-            .attr('clip-path', `url(#clip-${d.data.proof_uuid})`);
-
         // Apply grayscale filter if d.data.stage is 'submitted'
-        if (d.data.stage === 'submitted') {
-            image.attr('filter', 'url(#grayscale)');
+        if (d.data.left === null && d.data.right === null) {
+
+            // Create a circular clipPath
+            d3.select(this).append('clipPath')
+                .attr('id', `clip-${d.data.proof_uuid}`)
+                .append('circle')
+                .attr('r', layout.nodeRadius)
+                .attr('cx', 0)
+                .attr('cy', 0);
+
+            // Add the image with the applied clipPath
+            const image = d3.select(this).append('image')
+                .attr('xlink:href', icon.toDataURL())
+                .attr('width', layout.nodeRadius * 2)
+                .attr('height', layout.nodeRadius * 2)
+                .attr('x', -layout.nodeRadius)
+                .attr('y', -layout.nodeRadius)
+                .attr('clip-path', `url(#clip-${d.data.proof_uuid})`);
+            
+        } else {
+
+            d3.select(this).append("circle")
+                .attr("r", layout.nodeRadius)
+                // this is a callback returning a color based on the proof_uuid
+                .attr("fill", (d) => `#${d.data.proof_uuid.split('-').join('').substring(0,6)}`);
         }
 
         // Add text based on proof_uuid only for the root node
