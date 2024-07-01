@@ -6,14 +6,14 @@ const routes = [
         redirect: '/dashboard',
     },
     {
-        path: '/dashboard',
-        name: 'Dashboard',
+        path: '/dashboard_old',
+        name: 'Dashboard_old',
         component: () => import('pages/Dashboard1_old.vue'),
     },
     {
-        path: '/test1',
-        name: 'Test1',
-        component: () => import('pages/Test1Page.vue'),
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('pages/Dashboard.vue'),
     },
     {
         path: '/test2',
