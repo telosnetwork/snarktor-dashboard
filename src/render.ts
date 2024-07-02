@@ -6,7 +6,7 @@ import { analyzeTree } from './data';
 
 
 
-export const renderTree = (data: ProofNode, evgSelector: string, layout: TreeLayout) => {
+export const renderTree = (data: ProofNode, evgSelector: string, config: any, layout: TreeLayout) => {
     console.log('renderTree', {data, evgSelector, layout, config});
     // This is a workaround to avoid the first node to be painted in black (I couldn't find the cause of this issue)
     const aux = blockies.create({ seed: '', size: 8, scale: 4 });
@@ -95,7 +95,7 @@ export const renderTree = (data: ProofNode, evgSelector: string, layout: TreeLay
 };
 
 
-export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, layout: NodeListLayout) => {
+export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, config: any, layout: NodeListLayout) => {
     console.log('renderListOfNodes', { leafs, evgSelector, layout });
     
     const svg = d3.select(evgSelector).append('g')
@@ -136,7 +136,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, layou
 };
 
 
-export const calculateBestRadius = (tree: ProofNode): number => {
+export const calculateBestRadius = (tree: ProofNode, config: any): number => {
     const { height, leafs } = analyzeTree(tree);
     let radius: number;
     const { max, min, maxLeafs, minLeafs } = config.radiusLimits;
