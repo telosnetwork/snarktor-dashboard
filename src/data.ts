@@ -1,4 +1,3 @@
-import { config } from './config';
 import { ProofDataFetcher } from './data_fetcher';
 import { ProofDataGenerator } from './data_generator';
 import { DataSource, ProofData, ProofNode } from './types';
@@ -30,7 +29,7 @@ export class DataProcessor {
 }
 
 // Esta función decide que source utilizar dependiendo de la configuración en config.ts
-export const getDataProcessor = async () => {
+export const getDataProcessor = async (config) => {
     let source: DataSource;
     // Usamos el generador de datos mientras desarrollamos.
     if (config.useGeneratedData) {
