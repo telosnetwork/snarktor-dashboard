@@ -5,12 +5,23 @@
 @import './components/notification';
 @import './components/q-layout';
 
+@font-face {
+    font-family: silka;
+    src: url("assets/styles/silka/silka-regular-webfont.woff2") format("woff2"),
+        url("assets/styles/silka/silka-regular-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     --top-bar-height: 48px;
     --bottom-bar-height: 52px;
 
-    font-family: "silkaregular", sans-serif;
+    font-family: "silka", Serif, Arial, sans-serif;
+}
+
+p {
+    font-size: 16px !important;
 }
 
 body.body--light {
@@ -57,3 +68,33 @@ a {
     cursor: pointer;
 }
 
+html, body {
+    background-image: url("src/assets/bk-img.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-image {
+    // width: 96px;
+    // height: 32px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 128px; 
+    height: 43px;
+}
+
+.bg-navbar {
+    background: #f8f9fa !important;
+}
+
+.text-navbar {
+    color: black !important;
+}
+
+.q-toolbar {
+    min-height: 69px !important;
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, reactive } from 'vue';
+import { onMounted, watch, reactive, watchEffect, inject, Ref, ref } from 'vue';
 import { DataProcessor, getDataProcessor } from 'src/data';
 import { config } from 'src/config';
 import { Layout, NodeListLayout } from '../types';
@@ -139,7 +139,6 @@ const loadData = async () => {
 };
 
 let intervalId = null;
-
 const autoRefresh = (refreshSeconds) => {
 
     if (intervalId) {
@@ -157,6 +156,15 @@ watch(reactiveConfig, (config) => {
     autoRefresh(config.refreshInterval);
 });
 
+const loadDataTrigger = inject('loadDataTrigger') as Ref<number>;
+const showSettingsTrigger = inject('showSettingsTrigger') as Ref<boolean>;
+
+watchEffect(() => {
+  if (loadDataTrigger.value > 0) {
+    loadData();
+  }
+});
+
 onMounted(() => {
     loadData();
     autoRefresh(activeConfig.refreshInterval);
@@ -168,232 +176,234 @@ onMounted(() => {
 <template>
     <div class="c-dashboard">
 
-        <div class="row">
-            <q-expansion-item
-            expand-separator
-            icon="settings"
-            label="Settings"
-        >
-            <div class="q-my-md">
-                <form>
-                    <label>
-                        Refresh Interval (in seconds)
-                        <div class="row q-mb-md">
-                            <q-input 
-                                v-model.number="reactiveConfig.refreshInterval" 
-                                type="number" 
-                                style="max-width: 200px" 
-                                outlined
-                                clearable
-                                clear-icon="close"
-                            />
-                        </div>
-                    </label>
-                    <div class="row q-mb-md">
-                        <label>
-                            Rows (1 or 2 only)
-                            <q-input 
-                                v-model.number="reactiveConfig.rows"
-                                type="number" 
-                                min="1" max="2"
-                                style="max-width: 200px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+        <!-- <q-toggle v-model="showSettingsTrigger" label="Expanded" class="q-mb-md" /> -->
 
-                    <div class="q-mb-md">
-                        <label>
-                            API URL
-                            <q-input 
-                                v-model="reactiveConfig.dataUrl"
-                                style="max-width: 450px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+        <!-- Settings -->
+        <q-expansion-item v-model="showSettingsTrigger">
 
-                    <div>
-                        <q-checkbox left-label v-model="reactiveConfig.leavesUpwards" label="Reverse Leaf Direction" />
-                    </div>
-                    <div class="row q-mb-md">
-                        <q-checkbox left-label v-model="reactiveConfig.useGeneratedData" label="Use Randomly Generated Sample Data" />
-                    </div>
+            <q-card class="settings-container">
+                <q-card-section>
+                    <div class="c-dashboard__title">Settings</div>
+                    <div class="q-my-md">
+                        <form>
+                            <label>
+                                Refresh Interval (in seconds)
+                                <div class="row q-mb-md">
+                                    <q-input 
+                                        v-model.number="reactiveConfig.refreshInterval" 
+                                        type="number" 
+                                        style="max-width: 200px" 
+                                        outlined
+                                        clearable
+                                        clear-icon="close"
+                                    />
+                                </div>
+                            </label>
+                            <div class="row q-mb-md">
+                                <label>
+                                    Rows (1 or 2 only)
+                                    <q-input 
+                                        v-model.number="reactiveConfig.rows"
+                                        type="number" 
+                                        min="1" max="2"
+                                        style="max-width: 200px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
 
-                    <div class="settings-subtitle">Text Settings</div>
+                            <div class="q-mb-md">
+                                <label>
+                                    API URL
+                                    <q-input 
+                                        v-model="reactiveConfig.dataUrl"
+                                        style="max-width: 450px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
 
-                    <div class="row q-mb-md">
-                        <label class="q-mr-md">
-                            Horizontal offset
-                            <q-input 
-                                v-model.number="reactiveConfig.text_h_offset"
-                                type="number" 
-                                style="max-width: 166px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Vertical offset
-                            <q-input 
-                                v-model.number="reactiveConfig.text_v_offset"
-                                type="number" 
-                                style="max-width: 166px" 
-                                outlined
-                            />
-                        </label>
-                        <label>
-                            UUID Truncate Length
-                            <q-input 
-                                v-model.number="reactiveConfig.truncateId"
-                                type="number" 
-                                style="max-width: 166px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+                            <div>
+                                <q-checkbox left-label v-model="reactiveConfig.leavesUpwards" label="Reverse Leaf Direction" />
+                            </div>
+                            <div class="row q-mb-md">
+                                <q-checkbox left-label v-model="reactiveConfig.useGeneratedData" label="Use Randomly Generated Sample Data" />
+                            </div>
 
-                    <div class="settings-subtitle">Tree Margin</div>
+                            <div class="settings-subtitle">Text Settings</div>
 
-                    <div class="row q-mb-md">
-                        <label class="q-mr-md">
-                            Top
-                            <q-input 
-                                v-model.number="reactiveConfig.treeMargin.top"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Right
-                            <q-input 
-                                v-model.number="reactiveConfig.treeMargin.right"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Bottom
-                            <q-input 
-                                v-model.number="reactiveConfig.treeMargin.bottom"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Left
-                            <q-input 
-                                v-model.number="reactiveConfig.treeMargin.left"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+                            <div class="row q-mb-md">
+                                <label class="q-mr-md">
+                                    Horizontal offset
+                                    <q-input 
+                                        v-model.number="reactiveConfig.text_h_offset"
+                                        type="number" 
+                                        style="max-width: 166px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Vertical offset
+                                    <q-input 
+                                        v-model.number="reactiveConfig.text_v_offset"
+                                        type="number" 
+                                        style="max-width: 166px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label>
+                                    UUID Truncate Length
+                                    <q-input 
+                                        v-model.number="reactiveConfig.truncateId"
+                                        type="number" 
+                                        style="max-width: 166px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
 
-                    <div class="settings-subtitle">Node</div>
+                            <div class="settings-subtitle">Tree Margin</div>
 
-                    <div class="row q-mb-md">
-                        <label class="q-mr-md">
-                            Max Radius
-                            <q-input 
-                                v-model.number="reactiveConfig.radiusLimits.max"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Min Radius
-                            <q-input 
-                                v-model.number="reactiveConfig.radiusLimits.min"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Max Leaves
-                            <q-input 
-                                v-model.number="reactiveConfig.radiusLimits.maxLeafs"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Min Leaves
-                            <q-input 
-                                v-model.number="reactiveConfig.radiusLimits.minLeafs"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+                            <div class="row q-mb-md">
+                                <label class="q-mr-md">
+                                    Top
+                                    <q-input 
+                                        v-model.number="reactiveConfig.treeMargin.top"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Right
+                                    <q-input 
+                                        v-model.number="reactiveConfig.treeMargin.right"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Bottom
+                                    <q-input 
+                                        v-model.number="reactiveConfig.treeMargin.bottom"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Left
+                                    <q-input 
+                                        v-model.number="reactiveConfig.treeMargin.left"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
 
-                    <div class="settings-subtitle">Received Proofs</div>
+                            <div class="settings-subtitle">Node</div>
 
-                    <div class="row q-mb-md">
-                        <label class="q-mr-md">
-                            Horizontal Offset
-                            <q-input 
-                                v-model.number="reactiveConfig.received.h_offset"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Vertical Offset
-                            <q-input 
-                                v-model.number="reactiveConfig.received.v_offset"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Horizontal Spacing
-                            <q-input 
-                                v-model.number="reactiveConfig.received.h_spacing"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                        <label class="q-mr-md">
-                            Vertical Spacing
-                            <q-input 
-                                v-model.number="reactiveConfig.received.v_spacing"
-                                type="number" 
-                                style="max-width: 120px" 
-                                outlined
-                            />
-                        </label>
-                    </div>
+                            <div class="row q-mb-md">
+                                <label class="q-mr-md">
+                                    Max Radius
+                                    <q-input 
+                                        v-model.number="reactiveConfig.radiusLimits.max"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Min Radius
+                                    <q-input 
+                                        v-model.number="reactiveConfig.radiusLimits.min"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Max Leaves
+                                    <q-input 
+                                        v-model.number="reactiveConfig.radiusLimits.maxLeafs"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Min Leaves
+                                    <q-input 
+                                        v-model.number="reactiveConfig.radiusLimits.minLeafs"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
 
-                    <div class="q-mb-md row"></div>
-                    
-                </form>
-            </div>
+                            <div class="settings-subtitle">Received Proofs</div>
+
+                            <div class="row q-mb-md">
+                                <label class="q-mr-md">
+                                    Horizontal Offset
+                                    <q-input 
+                                        v-model.number="reactiveConfig.received.h_offset"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Vertical Offset
+                                    <q-input 
+                                        v-model.number="reactiveConfig.received.v_offset"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Horizontal Spacing
+                                    <q-input 
+                                        v-model.number="reactiveConfig.received.h_spacing"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                                <label class="q-mr-md">
+                                    Vertical Spacing
+                                    <q-input 
+                                        v-model.number="reactiveConfig.received.v_spacing"
+                                        type="number" 
+                                        style="max-width: 120px" 
+                                        outlined
+                                    />
+                                </label>
+                            </div>
+
+                            <div class="q-mb-md row"></div>
+                            
+                        </form>
+                     </div>
+                </q-card-section>
+            </q-card>
+
         </q-expansion-item>
-            <q-btn class="q-py-md q-ml-md" style="max-height: 50px;" color="white" text-color="black" label="Refresh" @click="loadData" />
-        </div>
-        
-
-        
-        
+        <!-- <q-btn class="q-py-md q-ml-md" style="max-height: 50px;" color="white" text-color="black" label="Refresh" @click="loadData" /> -->
+  
         <div class="c-dashboard__title">Received Proofs</div>
-        <svg class="received nodes"></svg>
+        <svg class="received nodes proof-container" style="background-color: white;"></svg>
 
         <div class="c-dashboard__title">Aggregated Proofs</div>
-        <svg class="aggregated trees"></svg>
+        <svg class="aggregated trees proof-container"></svg>
+
 
         <div class="c-dashboard__title">Submitted Proofs</div>
-        <svg class="submitted trees"></svg>
+        <svg class="submitted trees proof-container" style="background-color: white;"></svg>
 
     </div>
 </template>
@@ -406,9 +416,10 @@ onMounted(() => {
     gap: 20px;
     padding: 15px;
     &__title {
-        font-size: 1.5em;
-        font-weight: bold;
+        font-size: 1.5rem;
+        font-weight: 500;
         padding: 10px 0;
+        line-height: 29px;
     }
 }
 svg {
@@ -420,9 +431,29 @@ svg {
         height: 100px;
     }
 }
-.settings-subtitle {
-    font-size: 1.2em;
-    
+.settings-subtitle, .q-item__label {
+    font-size: 20px;
     padding: 10px 0;
 }
+.proof-container {
+    background-color: rgba(88, 89, 91, 0);
+    background-image: linear-gradient(#f0f0f0 18%, #fff);
+    box-shadow: 2px 0 24px -2px rgba(92, 92, 92, 0.30);
+}
+.settings-container {
+    background-color: rgba(88, 89, 91, 0);
+    background-image: linear-gradient(#f0f0f0 18%, #fff);
+    box-shadow: 2px 0 24px -2px rgba(92, 92, 92, 0.30);
+    border: 1px solid black;
+}
+label, .q-checkbox__label, text, .block {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 500;
+}
+.q-expansion-item--collapsed,
+.q-item--clickable {
+    display: none;
+}
+
 </style>
