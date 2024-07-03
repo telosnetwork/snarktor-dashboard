@@ -19,7 +19,7 @@ export const config = {
     rows: 1,
     // Text offsets
     text_h_offset: 40,
-    text_v_offset: -10,
+    text_v_offset: -5,
 
     // ------ Received Layout ------
     // received offsets
