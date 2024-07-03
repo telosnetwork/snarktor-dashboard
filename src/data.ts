@@ -1,9 +1,9 @@
 import { ProofDataFetcher } from './data_fetcher';
 import { ProofDataGenerator } from './data_generator';
-import { DataSource, ProofData, ProofNode } from './types';
+import { DataSource, ProofData, ProofNode, ProofNodeWithMetadata } from './types';
 
 export class DataProcessor {
-    private submittedProofs: ProofNode[] = [];
+    private submittedProofs: ProofNodeWithMetadata[] = [];
     private aggregatedProofs: ProofNode[] = [];
     private baseProofs: ProofNode[] = [];
 
@@ -15,7 +15,7 @@ export class DataProcessor {
         });
     }
 
-    public getSubmittedProofs(): ProofNode[] {
+    public getSubmittedProofs(): ProofNodeWithMetadata[] {
         return this.submittedProofs;
     }
 

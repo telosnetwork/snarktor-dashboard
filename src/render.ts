@@ -149,7 +149,7 @@ export const calculateBestRadius = (tree: ProofNode, config: any): number => {
         radius = max - Math.floor((leafs - minLeafs) * (max - min) / (maxLeafs - minLeafs));
     }
     
-    console.log('calculateBestRadius()', height, leafs, '---> radius: ', radius);
+    //console.log('calculateBestRadius()', height, leafs, '---> radius: ', radius);
     return radius;
 }
 

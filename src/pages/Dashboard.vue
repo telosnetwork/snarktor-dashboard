@@ -100,7 +100,7 @@ const renderSubmittedTrees = (dataProvider: DataProcessor, layout: Layout) => {
     const selector = 'svg.submitted.trees';
     clearCanvas(selector);
     for (let i=0; i<layout.submitted.count; i++) {
-        const tree = dataProvider.getSubmittedProofs()[i];
+        const tree = dataProvider.getSubmittedProofs()[i].ser_merkle_node;
         if (activeConfig.rows === 1) {
             // This prints all trees in a single row
             const width = layout.submitted.width / layout.submitted.count;
