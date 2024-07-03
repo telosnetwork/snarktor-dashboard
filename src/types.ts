@@ -7,8 +7,19 @@ export interface ProofNode {
     right: ProofNode | null;
 }
 
+export interface ProofNodeWithMetadata {
+    trx_id: string;
+    submit_time: NodeSubmitTime;
+    ser_merkle_node: ProofNode;
+}
+
+export interface NodeSubmitTime {
+    secs_since_epoch: number;
+    nanos_since_epoch: number;
+}
+
 export interface ProofData {
-    submitted_proofs: ProofNode[];
+    submitted_proofs: ProofNodeWithMetadata[];
     aggregated_proofs: ProofNode[];
     base_proofs: ProofNode[];
 }

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { DataSource, ProofData, ProofNode } from './types';
+import { DataSource, ProofData, ProofNode, ProofNodeWithMetadata } from './types';
 import { BehaviorSubject } from 'rxjs';
 
 
 export class ProofDataFetcher implements DataSource {
-    private submittedProofs: ProofNode[] = [];
+    private submittedProofs: ProofNodeWithMetadata[] = [];
     private aggregatedProofs: ProofNode[] = [];
     private baseProofs: ProofNode[] = [];
 
@@ -32,7 +32,7 @@ export class ProofDataFetcher implements DataSource {
         }
     }
 
-    public getSubmittedProofs(): ProofNode[] {
+    public getSubmittedProofs(): ProofNodeWithMetadata[] {
         return this.submittedProofs;
     }
 
