@@ -7,14 +7,14 @@ import { analyzeTree } from './data';
 
 
 export const renderTree = (data: ProofNode, evgSelector: string, config: any, layout: TreeLayout) => {
-    console.log('renderTree', {data, evgSelector, layout, config});
+    //console.log('renderTree', {data, evgSelector, layout, config});
     // This is a workaround to avoid the first node to be painted in black (I couldn't find the cause of this issue)
     const aux = blockies.create({ seed: '', size: 8, scale: 4 });
 
-    console.log([
-        layout.width - config.treeMargin.left - config.treeMargin.right,
-        layout.height - config.treeMargin.top - config.treeMargin.bottom,
-    ]);
+    // console.log([
+    //     layout.width - config.treeMargin.left - config.treeMargin.right,
+    //     layout.height - config.treeMargin.top - config.treeMargin.bottom,
+    // ]);
 
     const treeClass = `tree-${data.proof_uuid}`;
     const svg = d3.select(evgSelector).append('g')
@@ -52,7 +52,7 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
 
     // Add Blockies icons based on d.data.proof_uuid
     node.each(function(d: any, i: number) { // Add index parameter to identify root node
-        console.log('node.each', {d});
+        //console.log('node.each', {d});
         const icon: HTMLCanvasElement = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
 
         // Apply grayscale filter if d.data.stage is 'submitted'
@@ -89,7 +89,7 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
                 .attr('x', layout.nodeRadius + config.text_h_offset)
                 .attr('y', layout.nodeRadius + config.text_v_offset)
                 .attr('text-anchor', 'middle')
-                .text(d.data.proof_uuid.substring(0, config.truncateId) + '...');
+                .text(d.data.proof_uuid.substring(0, config.truncateId) + '..');
         }
     });
 };
@@ -108,7 +108,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
         .attr('transform', (d: any, i: number) => `translate(${i * (layout.nodeRadius * 2 + layout.h_spacing)}, 0)`);
 
     node.each(function(d: any, i: number) {
-        console.log('node.each', { d });
+        //console.log('node.each', { d });
         const icon: HTMLCanvasElement = blockies.create({ seed: d.proof_uuid, size: 8, scale: 4 });
 
         d3.select(this).append('clipPath')
@@ -131,7 +131,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
             .attr('x', 0)
             .attr('y', layout.nodeRadius + 20) // Position the text below the icon
             .attr('text-anchor', 'middle')
-            .text(d.proof_uuid.substring(0, config.truncateId) + '...');
+            .text(d.proof_uuid.substring(0, config.truncateId) + '..');
     });
 };
 
