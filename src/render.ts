@@ -53,7 +53,7 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
         //console.log('node.each', {d});
 
         // call create twice, the first time it returns a icon that doesnt use the seed due to a bug in the library
-        let icon: HTMLCanvasElement = blockies.create({ seed: "blah", size: 8, scale: 4 });
+        let icon: HTMLCanvasElement = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
         icon = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
 
         // Apply grayscale filter if d.data.stage is 'submitted'
@@ -110,7 +110,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
     node.each(function(d: any, i: number) {
 
         // call create twice, the first time it returns a icon that doesnt use the seed due to a bug in the library
-        let icon: HTMLCanvasElement = blockies.create({ seed: "blah", size: 8, scale: 4 });
+        let icon: HTMLCanvasElement = blockies.create({ seed: d.proof_uuid, size: 8, scale: 4 });
         icon = blockies.create({ seed: d.proof_uuid, size: 8, scale: 4 });
 
         d3.select(this).append('clipPath')
