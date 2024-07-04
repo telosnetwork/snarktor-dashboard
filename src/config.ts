@@ -25,7 +25,9 @@ export const config = {
     // received offsets
     received: { h_offset: 40, v_offset: 45, h_spacing: 40, v_spacing: 0 },
     // Truncate the proof_uuid to this length
-    truncateId: 5,
+    truncateId: 4,
     // refresh interval in seconds
     refreshInterval: 60,
+    // show UUID on all nodes
+    showUUIDOnAllNodes: true,
 }

@@ -85,18 +85,18 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
         }
 
         // Add text based on proof_uuid only for the root node
-        if (i === 0) { // Check if it is the root node
+        if (config.showUUIDOnAllNodes || i === 0) { // Check if it is the root node
             d3.select(this).append('text')
                 .attr('x', layout.nodeRadius + config.text_h_offset)
                 .attr('y', layout.nodeRadius + config.text_v_offset)
                 .attr('text-anchor', 'middle')
-                .text(d.data.proof_uuid.substring(0, config.truncateId) + '..');
+                .text(d.data.proof_uuid.substring(0, config.truncateId));
         }
     });
 };
 
 export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, config: any, layout: NodeListLayout) => {
-    console.log('renderListOfNodes', { leafs, evgSelector, layout });
+    //console.log('renderListOfNodes', { leafs, evgSelector, layout });
    
     const svg = d3.select(evgSelector).append('g')
         .attr('transform', `translate(${config.treeMargin.left + layout.h_offset},${layout.v_offset})`);
@@ -133,7 +133,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
             .attr('x', 0)
             .attr('y', layout.nodeRadius + 20) // Position the text below the icon
             .attr('text-anchor', 'middle')
-            .text(d.proof_uuid.substring(0, config.truncateId) + '..');
+            .text(d.proof_uuid.substring(0, config.truncateId));
     });
 };
 
