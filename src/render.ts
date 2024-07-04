@@ -4,8 +4,6 @@ import { config } from 'src/config';
 import { NodeListLayout, ProofNode, TreeLayout } from './types';
 import { analyzeTree } from './data';
 
-
-
 export const renderTree = (data: ProofNode, evgSelector: string, config: any, layout: TreeLayout) => {
     //console.log('renderTree', {data, evgSelector, layout, config});
     // This is a workaround to avoid the first node to be painted in black (I couldn't find the cause of this issue)
@@ -53,7 +51,10 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
     // Add Blockies icons based on d.data.proof_uuid
     node.each(function(d: any, i: number) { // Add index parameter to identify root node
         //console.log('node.each', {d});
-        const icon: HTMLCanvasElement = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
+
+        // call create twice, the first time it returns a icon that doesnt use the seed due to a bug in the library
+        let icon: HTMLCanvasElement = blockies.create({ seed: "blah", size: 8, scale: 4 });
+        icon = blockies.create({ seed: d.data.proof_uuid, size: 8, scale: 4 });
 
         // Apply grayscale filter if d.data.stage is 'submitted'
         if (d.data.left === null && d.data.right === null) {
@@ -94,10 +95,9 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
     });
 };
 
-
 export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, config: any, layout: NodeListLayout) => {
     console.log('renderListOfNodes', { leafs, evgSelector, layout });
-    
+   
     const svg = d3.select(evgSelector).append('g')
         .attr('transform', `translate(${config.treeMargin.left + layout.h_offset},${layout.v_offset})`);
 
@@ -108,8 +108,10 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
         .attr('transform', (d: any, i: number) => `translate(${i * (layout.nodeRadius * 2 + layout.h_spacing)}, 0)`);
 
     node.each(function(d: any, i: number) {
-        //console.log('node.each', { d });
-        const icon: HTMLCanvasElement = blockies.create({ seed: d.proof_uuid, size: 8, scale: 4 });
+
+        // call create twice, the first time it returns a icon that doesnt use the seed due to a bug in the library
+        let icon: HTMLCanvasElement = blockies.create({ seed: "blah", size: 8, scale: 4 });
+        icon = blockies.create({ seed: d.proof_uuid, size: 8, scale: 4 });
 
         d3.select(this).append('clipPath')
             .attr('id', `clip-${d.proof_uuid}`)
@@ -155,7 +157,4 @@ export const calculateBestRadius = (tree: ProofNode, config: any): number => {
 
 export const clearCanvas = (evgSelector: string) => {
     d3.select(evgSelector).selectAll('*').remove();
-
-    // This is a workaround to avoid the first node to be painted in black (I couldn't find the cause of this issue)
-    const aux = blockies.create({ seed: '', size: 8, scale: 4 });
 }
