@@ -7,7 +7,9 @@ import { calculateBestRadius, clearCanvas, renderListOfNodes, renderTree } from 
 
 // Load config from localStorage if available, otherwise use default
 const storedConfig = localStorage.getItem('config');
-const activeConfig = storedConfig ? JSON.parse(storedConfig) : config;
+// User using old config version - reload
+const reloadConfig = storedConfig && JSON.parse(storedConfig)?.showUUIDOnAllNodes === undefined
+const activeConfig = storedConfig && !reloadConfig ? JSON.parse(storedConfig) : config;
 const reactiveConfig = reactive(activeConfig);
 
 // Watch for changes in reactiveConfig and store it in localStorage
