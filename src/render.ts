@@ -87,6 +87,7 @@ export const renderTree = (data: ProofNode, evgSelector: string, config: any, la
         // Add text based on proof_uuid only for the root node
         if (config.showUUIDOnAllNodes || i === 0) { // Check if it is the root node
             d3.select(this).append('text')
+                .attr('class', "blockie-label")
                 .attr('x', layout.nodeRadius + config.text_h_offset)
                 .attr('y', layout.nodeRadius + config.text_v_offset)
                 .attr('text-anchor', 'middle')
@@ -130,6 +131,7 @@ export const renderListOfNodes = (leafs: ProofNode[], evgSelector: string, confi
 
         // Add text based on proof_uuid for the root node
         d3.select(this).append('text')
+            .attr('class', "blockie-label")
             .attr('x', 0)
             .attr('y', layout.nodeRadius + 20) // Position the text below the icon
             .attr('text-anchor', 'middle')

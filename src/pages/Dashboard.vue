@@ -179,9 +179,10 @@ onMounted(() => {
 <template>
     <div class="c-dashboard">
 
+        <!-- <div class="c-dashboard__pagetitle">Live SNARKtor ZK Proof Aggregation</div> -->
+
         <!-- Settings -->
         <q-expansion-item v-model="showSettingsTrigger">
-
             <q-card class="settings-container">
                 <q-card-section>
                     <div class="c-dashboard__title">Settings</div>
@@ -403,19 +404,56 @@ onMounted(() => {
                      </div>
                 </q-card-section>
             </q-card>
-
         </q-expansion-item>
         <!-- <q-btn class="q-py-md q-ml-md" style="max-height: 50px;" color="white" text-color="black" label="Refresh" @click="loadData" /> -->
   
-        <div class="c-dashboard__title">Received Proofs</div>
-        <svg class="received nodes proof-container" style="background-color: white;"></svg>
+        <div class="row">
+            <div class="col">
+                <div class="c-dashboard__title">Received Proofs</div>
+                <svg class="received nodes proof-container q-mb-md"></svg>
 
-        <div class="c-dashboard__title">Aggregated Proofs</div>
-        <svg class="aggregated trees proof-container"></svg>
+                <div class="c-dashboard__title">Aggregated Proofs</div>
+                <svg class="aggregated trees proof-container q-mb-md"></svg>
 
+                <div class="c-dashboard__title">Submitted Proofs</div>
+                <svg class="submitted trees proof-container q-mb-md"></svg>
+            </div>
+            
+            <div class="c-dashboard__sidebar settings-container gt-sm">
+                <div class="c-dashboard__sidebar-heading-section">
+                    <img style="width: 117.65px; height: 20px;" src="../assets/telos-snarktor.svg" alt="snarktor logo">
+                    <div class="c-dashboard__sidebar-heading">Live SNARKtor Zero-Knowledge Proof Aggregation Dashboard </div>
+                    <div class="c-dashboard__sidebar-subheading">SNARKtor, a scalable and robust protocol for decentralized recursive proof aggregation. It allows aggregating many proofs for different transactions into a single unique proof.</div>
+                </div>
 
-        <div class="c-dashboard__title">Submitted Proofs</div>
-        <svg class="submitted trees proof-container" style="background-color: white;"></svg>
+                <div class="c-dashboard__sidebar-panals">
+                    <div class='c-dashboard__sidebar-container c-dashboard__share-container'>
+                        <div class='c-dashboard__sidebar-panals-container'>
+                            <div class='c-dashboard__sidebar-container-inner'>
+                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-1.png" alt="whitepaper qr code">
+                                <div class='c-dashboard__sidebar-container-share'>
+                                    <div class="c-dashboard__sidebar-text">Share in</div>
+                                    <img style="width: 20px; height: 20px" src="../assets/x-logo.svg" alt="whitepaper qr code">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='c-dashboard__sidebar-panals-container'>
+                        <div class='c-dashboard__sidebar-container c-dashboard__whitepaper-container'>
+                            <div class='c-dashboard__sidebar-container-inner'>
+                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-2.png" alt="whitepaper qr code">
+                                <div class='c-dashboard__sidebar-container-share'>
+                                    <div class="c-dashboard__sidebar-text">Read</div>
+                                    <img style="width: 100px; height: 17px" src="../assets/snarktor-white.png" alt="whitepaper qr code">
+                                    <div class="c-dashboard__sidebar-text">Whitepaper</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -428,44 +466,159 @@ onMounted(() => {
     gap: 20px;
     padding: 15px;
     &__title {
-        font-size: 1.5rem;
-        font-weight: 500;
         padding: 10px 0;
-        line-height: 29px;
+        color: #404142;
+        font-family: Silka;
+        font-size: 1.4rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 25px;
+    }
+    &__pagetitle {
+        font-size: 60px;
+        font-weight: 600;
+        padding: 10px 0;
+        line-height: 60px;
+    }
+    &__sidebar {
+        display: flex;
+        width: 304px;
+        padding: 32px 16px 16px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 33px;
+        height: 100%;
+        margin-top: 46px;
+        margin-left: 10px;
+    }
+    &__sidebar-heading {
+        color: #404142;
+        font-family: Silka;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        //background-color: #fff;
+    }
+    &__sidebar-subheading {
+        color: #404142;
+        font-family: "Silka";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+    }
+    &__sidebar-heading-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;  
+    }
+    &__sidebar-panals {
+        display: flex;
+        flex-direction: column;
+        // align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+    }
+    &__sidebar-panals-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        align-self: stretch;
+    }
+    &__sidebar-container {
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        border-radius: 8px;
+    }
+    &__share-container {
+        background: #2C2B2F;
+    }
+    &__whitepaper-container {
+        background: linear-gradient(147deg, #557FFF 15.82%, #C19AFF 85.57%);
+    }
+    &__sidebar-container-inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 22px;
+        align-self: stretch;
+    }
+    &__sidebar-container-share {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+    }
+    &__sidebar-text {
+        color: #FFF;
+        font-family: Silka;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px; /* 171.429% */
+    }
+    &__whitepaper-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        align-self: stretch;
     }
 }
 svg {
-    border: 1px solid black;
+    border-radius: 8px; 
+    border: 1px solid #E6E9EC;
     &.trees {
         height: 400px;
+        width: 100%;
     }
     &.nodes {
         height: 100px;
+        width: 100%;
     }
 }
-.settings-subtitle, .q-item__label {
-    font-size: 20px;
-    padding: 10px 0;
-}
 .proof-container {
-    background-color: rgba(88, 89, 91, 0);
-    background-image: linear-gradient(#f0f0f0 18%, #fff);
-    box-shadow: 2px 0 24px -2px rgba(92, 92, 92, 0.30);
+    background-color: #fff;
+    box-shadow: 2px 0 20px -2px rgba(92, 92, 92, 0.12);
 }
 .settings-container {
-    background-color: rgba(88, 89, 91, 0);
-    background-image: linear-gradient(#f0f0f0 18%, #fff);
-    box-shadow: 2px 0 24px -2px rgba(92, 92, 92, 0.30);
-    border: 1px solid black;
+    background-color: #fff;
+    box-shadow: 2px 0 20px -2px rgba(92, 92, 92, 0.12);
+    border: 1px solid #E6E9EC;
+    overflow: hidden;
+    word-wrap: break-word;
+    border-radius: 8px; 
 }
-label, .q-checkbox__label, text, .block, .q-toggle__label {
-    font-size: 16px;
-    line-height: 21px;
+label, .q-checkbox__label, text, .block, .q-toggle__label, p {
+    color: #404142;
+    font-family: "Silka";
+    font-size: 14px;
+    font-style: normal;
     font-weight: 500;
+    line-height: 24px;
 }
 .q-expansion-item--collapsed,
 .q-item--clickable {
     display: none;
+}
+.settings-subtitle, .q-item__label {
+    padding: 10px 0;
+    color: #404142;
+    font-family: Silka;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 25px;
 }
 
 </style>

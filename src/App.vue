@@ -29,19 +29,15 @@ provide('showSettingsTrigger', showSettingsTrigger);
 <q-layout>
     <q-header elevated> 
         <q-toolbar class="bg-navbar text-navbar" >
-            <!-- <q-btn
-                flat
-                round
-                icon="menu"
-                @click="toggleDrawer"
-            /> -->
+            <!-- <q-btn flat round icon="menu" @click="toggleDrawer" /> -->
 
             <img class='navbar-image' src="./assets/telos-logo.svg" alt="telos logo">
-           
-            <q-toolbar-title>
-                Dashboard
-            </q-toolbar-title>
+
             <q-space />
+                <div class="items-center justify-center gt-sm text-header">Live SNARKtor ZK Proof Aggregation Dashboard</div>
+            <q-space />
+            
+            <img class='navbar-image' src="./assets/telos-snarktor.svg" alt="snarktor logo">
             <q-btn flat round dense icon="refresh" @click="emitLoadData"/>
             <q-btn flat round dense icon="settings" @click="emitShowSettings"/>
         </q-toolbar>
@@ -112,9 +108,20 @@ provide('showSettingsTrigger', showSettingsTrigger);
 }
 
 .text-footer {
-    color: #6c757d;
+    color: #404142;
+    font-family: "Silka";
     font-size: 16px;
+    font-style: normal;
     font-weight: 500;
+    line-height: 24px;
+}
+.text-header {
+    color: #404142;
+    font-family: Silka;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
 }
 
 </style>
