@@ -18,7 +18,7 @@ export const config = {
     // How many rows per section
     rows: 1,
     // Text offsets
-    text_h_offset: 40,
+    text_h_offset: 22,
     text_v_offset: -5,
 
     // ------ Received Layout ------
