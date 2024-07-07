@@ -430,7 +430,7 @@ onMounted(() => {
                     <div class='c-dashboard__sidebar-container c-dashboard__share-container'>
                         <div class='c-dashboard__sidebar-panals-container'>
                             <div class='c-dashboard__sidebar-container-inner'>
-                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-1.png" alt="whitepaper qr code">
+                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-2.jpeg" alt="whitepaper qr code">
                                 <div class='c-dashboard__sidebar-container-share'>
                                     <div class="c-dashboard__sidebar-text">Share in</div>
                                     <img style="width: 20px; height: 20px" src="../assets/x-logo.svg" alt="whitepaper qr code">
@@ -442,7 +442,7 @@ onMounted(() => {
                     <div class='c-dashboard__sidebar-panals-container'>
                         <div class='c-dashboard__sidebar-container c-dashboard__whitepaper-container'>
                             <div class='c-dashboard__sidebar-container-inner'>
-                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-2.png" alt="whitepaper qr code">
+                                <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-1.png" alt="whitepaper qr code">
                                 <div class='c-dashboard__sidebar-container-share'>
                                     <div class="c-dashboard__sidebar-text">Read</div>
                                     <img style="width: 100px; height: 17px" src="../assets/snarktor-white.png" alt="whitepaper qr code">
