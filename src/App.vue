@@ -76,7 +76,7 @@ provide('showSettingsTrigger', showSettingsTrigger);
             <div>
 
                 <div class="column items-center">
-                    <div class="text-footer center">Telos Snarktor Dashboard</div>
+                    <div class="text-footer center">Telos SNARKtor Dashboard</div>
                 </div>
 
                 <div class="items-center q-mt-sm">
