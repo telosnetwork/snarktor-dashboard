@@ -7,7 +7,7 @@ export const config = {
 
     // ------ Data fetcher ------
     // API URL that provides the data
-    dataUrl: 'https://snarktor-dev.telos.net/metrics',
+    dataUrl: 'https://snarktor.telos.net/metrics',
 
     // ------ Tree Layout ------
     treeMargin: { top: 50, right: 0, bottom: 50, left: 0 },
