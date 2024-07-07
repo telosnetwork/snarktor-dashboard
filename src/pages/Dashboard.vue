@@ -432,7 +432,7 @@ onMounted(() => {
                             <div class='c-dashboard__sidebar-container-inner'>
                                 <img style="width: 125px; height: 125px; border-radius: 8px;" src="../assets/qr-2.jpeg" alt="whitepaper qr code">
                                 <div class='c-dashboard__sidebar-container-share'>
-                                    <div class="c-dashboard__sidebar-text">Share in</div>
+                                    <div class="c-dashboard__sidebar-text">Share on</div>
                                     <img style="width: 20px; height: 20px" src="../assets/x-logo.svg" alt="whitepaper qr code">
                                 </div>
                             </div>
