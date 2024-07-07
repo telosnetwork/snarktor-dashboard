@@ -118,7 +118,7 @@ provide('showSettingsTrigger', showSettingsTrigger);
 .text-header {
     color: #404142;
     font-family: Silka;
-    font-size: 16px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
